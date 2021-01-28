@@ -15,6 +15,7 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
+import TrackPlayer from 'react-native-track-player';
 
 import {
   Header,
@@ -24,50 +25,35 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const App: () => React$Node = () => {
+
+const App = () => {
+  const [isTrackPlayerInit, setIsTrackPlayerInit] = React.useState(false);
+  const trackPlayerInit = async () => {
+    await TrackPlayer.setupPlayer();
+    await TrackPlayer.add({
+      id: '1',
+      url:
+        'https://audio-previews.elements.envatousercontent.com/files/103682271/preview.mp3',
+      type: 'default',
+      title: 'My Title',
+      album: 'My Album',
+      artist: 'Rohan Bhatia',
+      artwork: 'https://picsum.photos/100',
+    });
+    return true;
+  };
+  React.useEffect(() => {
+    const startPlayer = async () => {
+      let isInit = await trackPlayerInit();
+      setIsTrackPlayerInit(isInit);
+    };
+   // startPlayer();
+  }, []);
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      <SafeAreaView></SafeAreaView>
+      <Text>lsjlsjfsl</Text>
     </>
   );
 };
